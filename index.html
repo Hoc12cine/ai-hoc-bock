@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>مولد ملخصات الكتب المضحكة</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #e0eafc, #cfdef3);
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #4c6ef5;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            resize: vertical;
+            box-shadow: inset 2px 2px 5px #eee;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4c6ef5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background-color: #364fc7;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .output-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            text-align: left;
+        }
+
+        strong {
+            font-size: 1.1em;
+            color: #4c6ef5;
+        }
+
+        #outputSummary {
+            font-size: 1em;
+            margin-top: 10px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            textarea, button, .output-container, strong, #outputSummary {
+                font-size: 0.9em;
+            }
+
+            button {
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="container">
+        <h1>مولد ملخصات الكتب المضحكة</h1>
+        <textarea id="inputText" placeholder="الصق نص الكتاب أو المقال هنا" rows="10"></textarea><br><br>
+        <button onclick="generateFunnySummary()">إنشاء ملخص مضحك</button><br><br>
+        <div class="output-container">
+            <strong>الملخص المضحك:</strong>
+            <p id="outputSummary"></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        /* تهيئة مكتبة الجزيئات */
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#4c6ef5'
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    },
+                    polygon: {
+                        nb_sides: 5
+                    },
+                    image: {
+                        src: 'img/github.svg',
+                        width: 100,
+                        height: 100
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: {
+                        enable: false,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 5,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#4c6ef5',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 3,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'bounce',
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    bubble: {
+                        distance: 400,
+                        size: 40,
+                        duration: 2,
+                        opacity: 8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 200
+                    },
+                    push: {
+                        particles_nb: 4
+                    },
+                    remove: {
+                        particles_nb: 2
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
+        const apiKey = 'AIzaSyDk9S7ZB34LLqowBYsea1zDGMAd0CYOwb8'; // **تنبيه هام جداً: هذا غير آمن للاستخدام في تطبيقات الإنتاج الحقيقية! استبدل بمفتاح API الخاص بك.**
+
+        async function generateFunnySummary() {
+            const inputText = document.getElementById('inputText').value;
+            const outputSummaryElement = document.getElementById('outputSummary');
+
+            if (!inputText.trim()) {
+                outputSummaryElement.textContent = "الرجاء إدخال نص.";
+                return;
+            }
+
+            outputSummaryElement.textContent = "جارٍ إنشاء الملخص المضحك...";
+
+            const model = 'gemini-2.0-flash-thinking-exp-1219'; // يمكنك تجربة نماذج أخرى أيضًا
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+            const requestBody = {
+                contents: [{
+                    parts: [{ text: `المطلوب: ملخص طريف وجميل مفصل و بسيط غير رسمي اطرح الامر كانك صاحبه بتشرح له الفكرة  للنص التالي، بأسلوب بسيط وسهل الفهم وموجز. إليك النص: "${inputText}"` }]
+                }]
+            };
+
+            console.log("نص الطلب المرسل إلى API:", JSON.stringify(requestBody));
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+
+                console.log("رمز حالة الاستجابة من API:", response.status);
+
+                const responseText = await response.text();
+                console.log("نص الاستجابة الخام من API:", responseText);
+
+                if (!response.ok) {
+                    outputSummaryElement.textContent = `حدث خطأ في طلب API: ${response.status} - ${response.statusText}. تفاصيل إضافية في وحدة التحكم.`;
+                    return;
+                }
+
+                const data = JSON.parse(responseText);
+
+                if (data.candidates && data.candidates.length > 0) {
+                    for (const candidate of data.candidates) {
+                        if (candidate.content && candidate.content.role === "model" && candidate.content.parts) {
+                            let arabicSummary = "";
+                            for (const part of candidate.content.parts) {
+                                if (/[ء-ي]+/u.test(part.text)) {
+                                    arabicSummary = part.text; // الآن نقوم بتحديث المتغير فقط بدلاً من الإضافة
+                                }
+                            }
+                            outputSummaryElement.textContent = arabicSummary;
+                            return;
+                        }
+                    }
+                }
+
+                outputSummaryElement.textContent = "لم يتم استلام ملخص مضحك صالح من API.";
+
+            } catch (error) {
+                console.error("خطأ أثناء الاتصال بـ Gemini API:", error);
+                outputSummaryElement.textContent = `حدث خطأ غير متوقع: ${error.message}. تحقق من وحدة التحكم للمزيد من التفاصيل.`;
+            }
+        }
+    </script>
+</body>
+</html>
