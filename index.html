@@ -131,183 +131,209 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        /* تهيئة مكتبة الجزيئات */
-        particlesJS('particles-js', {
-            particles: {
-                number: {
-                    value: 80,
-                    density: {
-                        enable: true,
-                        value_area: 800
-                    }
-                },
-                color: {
-                    value: '#4c6ef5'
-                },
-                shape: {
-                    type: 'circle',
-                    stroke: {
-                        width: 0,
-                        color: '#000000'
-                    },
-                    polygon: {
-                        nb_sides: 5
-                    },
-                    image: {
-                        src: 'img/github.svg',
-                        width: 100,
-                        height: 100
-                    }
-                },
-                opacity: {
-                    value: 0.5,
-                    random: false,
-                    anim: {
-                        enable: false,
-                        speed: 1,
-                        opacity_min: 0.1,
-                        sync: false
-                    }
-                },
-                size: {
-                    value: 5,
-                    random: true,
-                    anim: {
-                        enable: false,
-                        speed: 40,
-                        size_min: 0.1,
-                        sync: false
-                    }
-                },
-                line_linked: {
+    /* تهيئة مكتبة الجزيئات */
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 80,
+                density: {
                     enable: true,
-                    distance: 150,
-                    color: '#4c6ef5',
-                    opacity: 0.4,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 3,
-                    direction: 'none',
-                    random: false,
-                    straight: false,
-                    out_mode: 'bounce',
-                    attract: {
-                        enable: false,
-                        rotateX: 600,
-                        rotateY: 1200
-                    }
+                    value_area: 800
                 }
             },
-            interactivity: {
-                detect_on: 'canvas',
-                events: {
-                    onhover: {
-                        enable: true,
-                        mode: 'grab'
-                    },
-                    onclick: {
-                        enable: true,
-                        mode: 'push'
-                    },
-                    resize: true
+            color: {
+                value: '#4c6ef5'
+            },
+            shape: {
+                type: 'circle',
+                stroke: {
+                    width: 0,
+                    color: '#000000'
                 },
-                modes: {
-                    grab: {
-                        distance: 140,
-                        line_linked: {
-                            opacity: 1
-                        }
-                    },
-                    bubble: {
-                        distance: 400,
-                        size: 40,
-                        duration: 2,
-                        opacity: 8,
-                        speed: 3
-                    },
-                    repulse: {
-                        distance: 200
-                    },
-                    push: {
-                        particles_nb: 4
-                    },
-                    remove: {
-                        particles_nb: 2
-                    }
+                polygon: {
+                    nb_sides: 5
+                },
+                image: {
+                    src: 'img/github.svg',
+                    width: 100,
+                    height: 100
                 }
             },
-            retina_detect: true
-        });
+            opacity: {
+                value: 0.5,
+                random: false,
+                anim: {
+                    enable: false,
+                    speed: 1,
+                    opacity_min: 0.1,
+                    sync: false
+                }
+            },
+            size: {
+                value: 5,
+                random: true,
+                anim: {
+                    enable: false,
+                    speed: 40,
+                    size_min: 0.1,
+                    sync: false
+                }
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: '#4c6ef5',
+                opacity: 0.4,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 3,
+                direction: 'none',
+                random: false,
+                straight: false,
+                out_mode: 'bounce',
+                attract: {
+                    enable: false,
+                    rotateX: 600,
+                    rotateY: 1200
+                }
+            }
+        },
+        interactivity: {
+            detect_on: 'canvas',
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: 'grab'
+                },
+                onclick: {
+                    enable: true,
+                    mode: 'push'
+                },
+                resize: true
+            },
+            modes: {
+                grab: {
+                    distance: 140,
+                    line_linked: {
+                        opacity: 1
+                    }
+                },
+                bubble: {
+                    distance: 400,
+                    size: 40,
+                    duration: 2,
+                    opacity: 8,
+                    speed: 3
+                },
+                repulse: {
+                    distance: 200
+                },
+                push: {
+                    particles_nb: 4
+                },
+                remove: {
+                    particles_nb: 2
+                }
+            }
+        },
+        retina_detect: true
+    });
 
-        const apiKey = 'AIzaSyDk9S7ZB34LLqowBYsea1zDGMAd0CYOwb8'; // **تنبيه هام جداً: هذا غير آمن للاستخدام في تطبيقات الإنتاج الحقيقية! استبدل بمفتاح API الخاص بك.**
+    const apiKey = 'AIzaSyDk9S7ZB34LLqowBYsea1zDGMAd0CYOwb8'; // **تنبيه هام جداً: هذا غير آمن للاستخدام في تطبيقات الإنتاج الحقيقية! استبدل بمفتاح API الخاص بك.**
 
-        async function generateFunnySummary() {
-            const inputText = document.getElementById('inputText').value;
-            const outputSummaryElement = document.getElementById('outputSummary');
+    // **تنفيذ الاتصال المسبق بمجرد تحميل الصفحة**
+    window.onload = preConnectToApi;
 
-            if (!inputText.trim()) {
-                outputSummaryElement.textContent = "الرجاء إدخال نص.";
+    async function preConnectToApi() {
+        const model = 'gemini-2.0-flash-exp';
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}`; // طلب بسيط لنهاية النموذج فقط
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'GET', // نستخدم GET لطلب بسيط
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Goog-Api-Key': apiKey // قد تحتاج لإضافة مفتاح الـ API هنا حسب متطلبات API جوجل
+                }
+            });
+
+            if (response.ok) {
+                console.log("تم الاتصال المسبق بالـ API بنجاح.");
+            } else {
+                console.error("فشل الاتصال المسبق بالـ API:", response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error("خطأ أثناء الاتصال المسبق بالـ API:", error);
+        }
+    }
+
+    async function generateFunnySummary() {
+        const inputText = document.getElementById('inputText').value;
+        const outputSummaryElement = document.getElementById('outputSummary');
+
+        if (!inputText.trim()) {
+            outputSummaryElement.textContent = "الرجاء إدخال نص.";
+            return;
+        }
+
+        outputSummaryElement.textContent = "جارٍ إنشاء الملخص المضحك...";
+
+        const model = 'gemini-2.0-flash-exp'; // يمكنك تجربة نماذج أخرى أيضًا
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+        const requestBody = {
+            contents: [{
+                parts: [{ text: `المطلوب: ملخص طريف وجميل مفصل و بسيط غير رسمي اطرح الامر كانك صاحبه بتشرح له الفكرة  للنص التالي، بأسلوب بسيط وسهل الفهم وموجز. إليك النص: "${inputText}"` }]
+            }]
+        };
+
+        console.log("نص الطلب المرسل إلى API:", JSON.stringify(requestBody));
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            console.log("رمز حالة الاستجابة من API:", response.status);
+
+            const responseText = await response.text();
+            console.log("نص الاستجابة الخام من API:", responseText);
+
+            if (!response.ok) {
+                outputSummaryElement.textContent = `حدث خطأ في طلب API: ${response.status} - ${response.statusText}. تفاصيل إضافية في وحدة التحكم.`;
                 return;
             }
 
-            outputSummaryElement.textContent = "جارٍ إنشاء الملخص المضحك...";
+            const data = JSON.parse(responseText);
 
-            const model = 'gemini-2.0-flash-exp'; // يمكنك تجربة نماذج أخرى أيضًا
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-
-            const requestBody = {
-                contents: [{
-                    parts: [{ text: `المطلوب: ملخص طريف وجميل مفصل و بسيط غير رسمي اطرح الامر كانك صاحبه بتشرح له الفكرة  للنص التالي، بأسلوب بسيط وسهل الفهم وموجز. إليك النص: "${inputText}"` }]
-                }]
-            };
-
-            console.log("نص الطلب المرسل إلى API:", JSON.stringify(requestBody));
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestBody),
-                });
-
-                console.log("رمز حالة الاستجابة من API:", response.status);
-
-                const responseText = await response.text();
-                console.log("نص الاستجابة الخام من API:", responseText);
-
-                if (!response.ok) {
-                    outputSummaryElement.textContent = `حدث خطأ في طلب API: ${response.status} - ${response.statusText}. تفاصيل إضافية في وحدة التحكم.`;
-                    return;
-                }
-
-                const data = JSON.parse(responseText);
-
-                if (data.candidates && data.candidates.length > 0) {
-                    for (const candidate of data.candidates) {
-                        if (candidate.content && candidate.content.role === "model" && candidate.content.parts) {
-                            let arabicSummary = "";
-                            for (const part of candidate.content.parts) {
-                                if (/[ء-ي]+/u.test(part.text)) {
-                                    arabicSummary = part.text; // الآن نقوم بتحديث المتغير فقط بدلاً من الإضافة
-                                }
+            if (data.candidates && data.candidates.length > 0) {
+                for (const candidate of data.candidates) {
+                    if (candidate.content && candidate.content.role === "model" && candidate.content.parts) {
+                        let arabicSummary = "";
+                        for (const part of candidate.content.parts) {
+                            if (/[ء-ي]+/u.test(part.text)) {
+                                arabicSummary = part.text; // الآن نقوم بتحديث المتغير فقط بدلاً من الإضافة
                             }
-                            outputSummaryElement.textContent = arabicSummary;
-                            return;
                         }
+                        outputSummaryElement.textContent = arabicSummary;
+                        return;
                     }
                 }
-
-                outputSummaryElement.textContent = "لم يتم استلام ملخص مضحك صالح من API.";
-
-            } catch (error) {
-                console.error("خطأ أثناء الاتصال بـ Gemini API:", error);
-                outputSummaryElement.textContent = `حدث خطأ غير متوقع: ${error.message}. تحقق من وحدة التحكم للمزيد من التفاصيل.`;
             }
+
+            outputSummaryElement.textContent = "لم يتم استلام ملخص مضحك صالح من API.";
+
+        } catch (error) {
+            console.error("خطأ أثناء الاتصال بـ Gemini API:", error);
+            outputSummaryElement.textContent = `حدث خطأ غير متوقع: ${error.message}. تحقق من وحدة التحكم للمزيد من التفاصيل.`;
         }
-    </script>
+    }
+</script>
 </body>
 </html>
